@@ -42,6 +42,8 @@ Run conversion commands from the relevant component directory. CIPI PHP conversi
 
 ## Publication and licensing
 
-No code license has been selected. Confirm ownership and choose a software license before describing the project as open source. Dataset rights and attribution must be assessed separately; workbooks and generated JSON are excluded from publication by default.
+The source code and accompanying software documentation in both components are licensed under the [MIT License](LICENSE). Copyright (c) 2026 FedeDP7.
+
+This license does not cover classification datasets or any thesis document. Dataset rights and attribution are separate; workbooks and generated JSON remain excluded from Git.
 
 Read the [publication checklist](docs/PUBLICATION.md) before the first commit. The source archive was not modified.

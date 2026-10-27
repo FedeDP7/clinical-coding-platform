@@ -8,7 +8,7 @@ Prepared on 2026-10-27 from the supplied project archive.
 - No matching credentials or patient identifier records found by the performed pattern and structure checks. This is a bounded file audit, not a guarantee or a full application security assessment.
 - Spreadsheet internal XML and properties inspected. Author names and local workbook paths exist in the original workbooks; these files are excluded from publication.
 - APIs permit cross-origin GET requests and mention `X-Api-Key` in allowed headers; this header does not implement authentication. Development servers should only be used locally.
-- Before publication: select a code license after confirming ownership; establish dataset redistribution terms; inspect `git status --short` and `git diff --cached` before committing.
+- Code ownership was confirmed by the author. Source code and accompanying software documentation are licensed under MIT in the root `LICENSE` file. Classification datasets and any thesis document are outside its scope. Establish dataset redistribution terms separately; inspect `git status --short` and `git diff --cached` before committing.
 - This component belongs to the single `clinical-coding-platform` repository. Git metadata lives only at the repository root. The publication uses the root repository only.
 
 The standalone CIPI project and the combined project contain differing JavaScript and API implementations. Both are retained; no unverified merge or deduplication was performed.

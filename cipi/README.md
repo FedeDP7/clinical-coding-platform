@@ -28,6 +28,6 @@ Open `http://localhost:8000/Web/cipi.html`. Run the two repositories separately,
 
 ## Publication status
 
-This is a preparation for publication. No software license has been selected; confirm ownership and choose a license before describing the code as open source. Dataset licensing is separate: local metadata includes license labels, but these have not been independently verified. The XLSX sources and generated JSON files are excluded from Git until redistribution terms are established.
+The source code and accompanying software documentation are licensed under the [MIT License](../LICENSE), copyright (c) 2026 FedeDP7. This license does not cover classification datasets or any thesis document. Dataset licensing is separate: local metadata includes license labels, but these have not been independently verified. The XLSX sources and generated JSON files are excluded from Git until redistribution terms are established.
 
 The original source archive was not modified. Local assistant configuration and internal working notes were omitted from this copy. See [publication notes](docs/PUBLICATION.md).
