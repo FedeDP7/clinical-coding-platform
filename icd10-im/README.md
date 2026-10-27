@@ -6,7 +6,7 @@ Academic project providing PHP REST APIs and an embeddable JavaScript coding too
 
 PHP with ZipArchive and SimpleXML. No Composer installation is required. Node.js is optional for the alternative CIPI converter in the standalone CIPI project.
 
-The original datasets are available only in this prepared local copy. They are ignored by Git. A fresh clone needs authorized source workbooks placed in `api/data/`; see [dataset instructions](api/data/README.md).
+Official workbooks and generated datasets are deliberately not distributed. No additional redistribution-permission process or hosted data API is planned. A fresh clone can run the synthetic tests described in the root README; the data-backed demos require separately held, lawfully usable local workbooks. See the [distribution policy](../docs/DATA_SOURCES.md) and [private integration instructions](api/data/README.md).
 
 From this repository directory, generate the datasets if necessary:
 
@@ -29,6 +29,6 @@ Open `http://localhost:8000/index.html`. Run the two repositories separately, or
 
 ## Publication status
 
-The source code and accompanying software documentation are licensed under the [MIT License](../LICENSE), copyright (c) 2026 FedeDP7. This license does not cover classification datasets or any thesis document. Dataset licensing is separate: local metadata includes license labels, but these have not been independently verified. The XLSX sources and generated JSON files are excluded from Git until redistribution terms are established.
+The source code and accompanying software documentation are licensed under the [MIT License](../LICENSE), copyright (c) 2026 FedeDP7. This license does not cover classification datasets or any thesis document. Official workbooks and generated JSON remain excluded by the project's distribution policy. This is not a pending authorization task. Local source notices are recorded in the [policy and references](../docs/DATA_SOURCES.md).
 
 The original source archive was not modified. Local assistant configuration and internal working notes were omitted from this copy. See [publication notes](docs/PUBLICATION.md).

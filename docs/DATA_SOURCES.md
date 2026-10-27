@@ -1,48 +1,43 @@
-# Classification sources, attribution and reuse
+# Data distribution policy and source references
 
-Checked on 2026-10-27 against the copyright notices embedded in the two local source workbooks supplied by the author. This identifies the terms on those copies; it does not establish that they are the latest releases or independently authenticate their download history.
+## Publication decision
 
-## ICD-10-IM
+This repository is distributed as software and documentation, with synthetic regression fixtures and synthetic presentation previews. It does not distribute official classification workbooks, derived JSON datasets or a hosted service exposing those datasets.
 
-**Rights holders:** Ministero della Salute and Regione Autonoma Friuli Venezia Giulia.
+The maintainer has chosen **not to pursue additional dataset redistribution authorizations or contact rights holders as part of this project**. This is the chosen scope of publication, not an unfinished approval step or a task required for releasing the code.
 
-**Source version:** gamma 2.1, December 2025, with ICD-9-CM crosswalk, excluding chapter XX.
+Official workbooks and generated data are excluded by `.gitignore`. Local copies already held by the author remain private; this policy does not delete them. The importers and APIs remain available as software. Technical integration instructions do not provide data, download them automatically or grant rights to use or redistribute third-party material.
 
-The source workbook requests the following citation:
+## Synthetic demonstrations
+
+Current README previews show invented `DEMO` identifiers and fictional descriptions explicitly labelled as non-clinical. They were generated in temporary directories without loading the official workbooks or their derived datasets. They are examples of the interface, not classification content or clinical coding advice.
+
+Regression tests use their own small synthetic fixtures and work without official data. No public data API is offered by this repository.
+
+Earlier commits contained previews with classification excerpts. Those previews have been replaced in the current revision; earlier Git history has not been rewritten. No official workbook or generated JSON dataset has been added to the repository history.
+
+## Source references retained for context
+
+The following records describe the notices observed in the author's local workbooks on 2026-10-27. They do not indicate that files are supplied, that the references identify the latest release or that additional redistribution rights have been obtained.
+
+### ICD-10-IM
+
+The local gamma 2.1 workbook (December 2025, ICD-9-CM crosswalk, excluding chapter XX) names Ministero della Salute and Regione Autonoma Friuli Venezia Giulia and specifies CC BY-NC-ND 4.0. Its requested citation is:
 
 > Ministero della Salute e Regione Autonoma Friuli Venezia Giulia, Elenco sistematico ICD-10-IM, versione gamma, 2.1 - Dicembre 2025, con transcodifica in ICD-9-CM (senza capitolo XX). Licenza: CC BY-NC-ND 4.0
 
-Official references: [ICD-10-IM classification](https://www.salute.gov.it/new/it/tema/assistenza-ospedaliera-sdo/la-classificazione-delle-diagnosi-icd-10-im/) and [NSIS-CLASS technical documentation](https://www.salute.gov.it/new/it/tema/assistenza-ospedaliera-sdo/documentazione-tecnica/).
+Reference: [Ministry ICD-10-IM page](https://www.salute.gov.it/new/it/tema/assistenza-ospedaliera-sdo/la-classificazione-delle-diagnosi-icd-10-im/).
 
-## CIPI
+### CIPI
 
-**Rights holder:** Ministero della Salute.
+The local gamma 2.0 workbook (December 2025) names Ministero della Salute as its owner and specifies CC BY-NC-ND 4.0.
 
-**Source version:** gamma 2.0, December 2025.
+Reference: [Ministry CIPI page](https://www.salute.gov.it/new/it/tema/assistenza-ospedaliera-sdo/la-classificazione-delle-procedure-cipi/).
 
-Attribution: Ministero della Salute, Classificazione Italiana delle Procedure e Interventi (CIPI), versione gamma 2.0, Dicembre 2025. The supplied workbook expressly identifies the Ministry as the exclusive owner and states **CC BY-NC-ND 4.0**.
+Source documentation reference: [NSIS-CLASS technical documentation](https://www.salute.gov.it/new/it/tema/assistenza-ospedaliera-sdo/documentazione-tecnica/). License reference: [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
 
-Official references: [CIPI classification](https://www.salute.gov.it/new/it/tema/assistenza-ospedaliera-sdo/la-classificazione-delle-procedure-cipi/) and [NSIS-CLASS technical documentation](https://www.salute.gov.it/new/it/tema/assistenza-ospedaliera-sdo/documentazione-tecnica/).
+## Software license and scope
 
-## Separate rights and permitted uses
+The project's own software, software documentation, synthetic fixtures and current synthetic previews use the [MIT License](../LICENSE). Third-party source notices, classification materials and any thesis document are outside that grant. Publishing import code does not license the data it could process.
 
-The workbooks specify [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en): noncommercial sharing of unadapted material with attribution and retained notices. The project's MIT license does not replace these terms or cover classification content displayed in screenshots. It applies to the project's own software and software documentation.
-
-The [legal code, sections 2–4](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.en), permits necessary technical format changes and noncommercial private adaptations, but does not grant permission to share adapted material. A faithful format conversion is not automatically an adaptation. Hierarchy changes, generated nodes and database restructuring require a separate assessment before redistribution, including through an API.
-
-This repository distributes neither source workbooks nor generated classification datasets. It contains import software and synthetic regression fixtures. The ICD-10-IM import normalizes roots and adds two technical ranges; CIPI converters also generate hierarchy nodes. These are project processing steps, not official revisions or modifications endorsed by the source owners. Redistribution permission for the resulting normalized datasets has not been established.
-
-## Screenshots
-
-The two README screenshots illustrate the author's software using selected classification entries. Classification codes and descriptions shown retain their source terms and attribution above; they are not relicensed under MIT. The screenshots contain no patient records. Source labels are displayed through the application's interface; classification titles are not translated or rewritten for the screenshots.
-
-Creative Commons explains that [unaltered excerpts used to illustrate a larger work generally do not create an adaptation](https://creativecommons.org/faq/#can-i-reuse-an-excerpt-of-a-larger-work-that-is-licensed-with-the-noderivs-restriction). This is contextual guidance, not blanket authorization for every screenshot, presentation or dataset transformation.
-
-## Publication boundaries
-
-- Download authorized source files from the official technical documentation page; retain their full source notices.
-- Keep workbooks and generated data local as configured by `.gitignore`.
-- Confirm permission with the relevant rights holders before distributing normalized datasets, running a public data API or using the data commercially where the existing license does not cover that use. The source-code MIT license grants no such data rights.
-- [GitHub's terms, section D](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service#d-user-generated-content), require sufficient rights in third-party uploads; a public download alone is not proof of all required platform permissions.
-
-The supplied versions are marked as experimental prototypes. The Ministry's classification pages describe their experimentation status; this independent academic project is not an official Ministry, regional or WHO service and no endorsement is claimed.
+This is an independent academic project. No endorsement by the Ministry, Regione Autonoma Friuli Venezia Giulia or WHO is claimed. The source files described above identify experimental versions; they are not bundled or represented as a current official coding service.

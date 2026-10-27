@@ -35,7 +35,7 @@ coverage/
 *.swp
 *~
 
-# Local datasets: retain locally, do not publish automatically
+# Local datasets: excluded by the project distribution policy
 **/api/data/*
 !**/api/data/README.md
 *.xlsx

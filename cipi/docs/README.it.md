@@ -1,5 +1,7 @@
 # CIPI API — Setup
 
+> **Politica di pubblicazione:** questa repository distribuisce codice, documentazione e test sintetici. I dataset ufficiali e i JSON generati restano esclusi; non è previsto avviare richieste di autorizzazione alla redistribuzione né offrire un servizio pubblico dei dati. Le istruzioni seguenti descrivono soltanto l’integrazione locale di materiale già legittimamente disponibile. [Politica completa](../../docs/DATA_SOURCES.md).
+
 Embedded Coding Tool (CODIT) e REST API per il dataset CIPI v2.0 (Dicembre 2025).
 
 ## Obiettivo

@@ -4,6 +4,14 @@ PHP REST APIs and embeddable JavaScript tools for browsing, searching and select
 
 Developed by **[Federico Del Pup](https://github.com/FedeDP7)** as a thesis project, the platform brings classification data, hierarchical navigation and reusable coding interfaces together. Its design is inspired by the WHO ICD-11 architecture.
 
+## Distribution policy
+
+This repository publishes the project's software, documentation and synthetic regression fixtures. **Official classification workbooks and generated datasets are deliberately not distributed.** This is a publication choice, not a pending release task.
+
+The maintainer is not pursuing additional dataset redistribution permissions or providing a hosted classification-data API. No permission-request workflow is planned. The MIT license covers the project's own code and documentation; it does not grant rights in third-party classifications.
+
+Tests run without official data. The current screenshots use invented, explicitly non-clinical records. Any separately held source workbooks and generated data remain private and ignored by Git. See the [full policy and source references](docs/DATA_SOURCES.md).
+
 ## Academic context
 
 **Thesis title** — *Progettazione e sviluppo di una piattaforma per ICD-10-IM ispirata all’architettura ICD-11 dell’OMS: API REST e libreria JavaScript*
@@ -26,21 +34,17 @@ The thesis title and classification terminology are retained in Italian. This RE
 
 ### ICD-10-IM
 
-Hierarchy browser and details for a selected ICD-10-IM code.
+Main component browser and entity details, shown with fictional demonstration records.
 
-![ICD-10-IM browser showing the hierarchy and selected code details](docs/images/icd10-im-browser.png)
-
-Classification content: Ministero della Salute and Regione Autonoma Friuli Venezia Giulia, ICD-10-IM gamma 2.1 (December 2025), [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). [Full attribution and source](docs/DATA_SOURCES.md#icd-10-im).
+![Main component browser displaying fictional non-clinical records](docs/images/icd10-im-browser.png)
 
 ### CIPI
 
 The standalone CIPI browser uses the same interaction patterns for procedure codes.
 
-![CIPI browser showing the hierarchy and selected procedure details](docs/images/cipi-browser.png)
+![Standalone CIPI browser displaying fictional non-clinical records](docs/images/cipi-browser.png)
 
-Classification content: Ministero della Salute, CIPI gamma 2.0 (December 2025), [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). [Full attribution and source](docs/DATA_SOURCES.md#cipi).
-
-Screenshots show the local demo interfaces using classification data; no patient records are used.
+Both previews use synthetic `DEMO` records created for presentation. They contain neither official classification entries nor patient data, and their codes are not valid clinical codes.
 
 ## Repository components
 
@@ -69,9 +73,9 @@ git clone https://github.com/FedeDP7/clinical-coding-platform.git
 cd clinical-coding-platform
 ```
 
-### 2. Supply the classification data
+### 2. Optional private data integration
 
-**Workbooks and generated JSON files are not included in Git.** Obtain authorized source workbooks before running the data-backed demos. The expected locations are:
+A fresh clone can run the [regression tests](#regression-tests) immediately. The following instructions document optional integration for users who independently hold data they may lawfully use; the project supplies no data or automatic downloader. Expected local locations are:
 
 | Component / dataset | Source workbook | Generated data |
 | --- | --- | --- |
@@ -83,7 +87,7 @@ Only the workbooks for the component and dataset you intend to use are needed. S
 
 ### 3. Start the main platform
 
-Run these commands from the repository root after supplying the corresponding workbooks:
+If you independently have the appropriate workbooks for private use, these technical commands run from the repository root:
 
 ```sh
 php icd10-im/scripts/convert.php icd10-im/api/data/icd10im.xlsx icd10-im/api/data/icd10im.json
@@ -121,4 +125,4 @@ The suite uses synthetic fixtures and does not require classification datasets. 
 
 ICD-10-IM import preserves source clinical fields, retains chapter intervals as metadata and adds two explicitly marked, non-codable technical range containers for navigation. CIPI PHP and Node conversion outputs differ only in line-ending normalization for 19 source entities. See the [correction details](docs/FIXES.md).
 
-Source code and accompanying software documentation are licensed under the **[MIT License](LICENSE)**. Classification datasets, classification content visible in screenshots and any thesis document are outside that license's scope. The supplied workbooks specify **CC BY-NC-ND 4.0**. See [sources, attribution and reuse conditions](docs/DATA_SOURCES.md), including the limits on sharing normalized datasets. Local workbooks and generated JSON remain ignored by Git.
+Source code, accompanying project documentation and the synthetic previews are licensed under the **[MIT License](LICENSE)**. Third-party classification materials and any thesis document are outside that license's scope. Source references and notices are retained in [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md). Dataset distribution and a hosted classification-data API are outside this repository's publication scope; no further permission process is planned.

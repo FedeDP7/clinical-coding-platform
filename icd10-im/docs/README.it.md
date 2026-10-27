@@ -1,5 +1,7 @@
 # ICD-10-IM Coding Tool — Setup
 
+> **Politica di pubblicazione:** questa repository distribuisce codice, documentazione e test sintetici. I dataset ufficiali e i JSON generati restano esclusi; non è previsto avviare richieste di autorizzazione alla redistribuzione né offrire un servizio pubblico dei dati. Le istruzioni seguenti descrivono soltanto l’integrazione locale di materiale già legittimamente disponibile. [Politica completa](../../docs/DATA_SOURCES.md).
+
 Embedded Coding Tool e REST API per **ICD-10-IM**, progettati per offrire un'integrazione semplice lato sviluppatore e una struttura compatibile, a livello concettuale, con l'uso futuro di ICD-11. Il parametro `source` è predisposto per ospitare futuri dataset (es. `mms` / `icf` / `foundation` allineati al WHO ECT v1.8), ma attualmente la whitelist autorizza `icd10im` e `cipi`.
 
 ## Obiettivo
