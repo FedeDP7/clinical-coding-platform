@@ -21,4 +21,4 @@ Both PHP converters completed successfully. ICD-10-IM output matched the supplie
 
 ## Current distribution scope
 
-Official datasets remain private and excluded. Current README screenshots use fictional non-clinical records. No additional redistribution authorization or public data service is being pursued. See [the repository policy](../../docs/DATA_SOURCES.md). Earlier Git commits may still contain previous previews; the current screenshots replace them without rewriting history.
+Publish code, documentation, synthetic regression tests and illustrative interface screenshots with source attribution. Official workbooks and generated datasets remain private and ignored by Git. No additional dataset redistribution-permission process or hosted classification-data API is planned. Screenshots contain selected classification entries and no patient records; their classification content remains outside the MIT grant. See [sources and data policy](../../docs/DATA_SOURCES.md).

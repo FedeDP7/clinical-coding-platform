@@ -17,4 +17,4 @@ Detailed component notes: [main platform](../icd10-im/docs/PUBLICATION.md), [sta
 
 ## Chosen publication policy
 
-Publish code, documentation, synthetic tests and synthetic previews only. Keep official workbooks and derived datasets private and ignored by Git. Do not treat additional dataset authorization or a hosted classification-data API as pending release tasks. See [DATA_SOURCES.md](DATA_SOURCES.md). Earlier commits can contain previous classification-backed previews; they are replaced in the current revision without rewriting Git history.
+Publish code, documentation, synthetic regression tests and illustrative interface screenshots with source attribution. Official workbooks and generated datasets remain private and ignored by Git. No additional dataset redistribution-permission process or hosted classification-data API is planned. Screenshots contain selected classification entries and no patient records; their classification content remains outside the MIT grant. See [sources and data policy](DATA_SOURCES.md).

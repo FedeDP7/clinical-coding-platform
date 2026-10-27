@@ -6,11 +6,9 @@ Developed by **[Federico Del Pup](https://github.com/FedeDP7)** as a thesis proj
 
 ## Distribution policy
 
-This repository publishes the project's software, documentation and synthetic regression fixtures. **Official classification workbooks and generated datasets are deliberately not distributed.** This is a publication choice, not a pending release task.
+Official classification workbooks and generated datasets are **not included**. This repository provides software, documentation, synthetic regression tests and screenshots illustrating the interfaces. No dataset redistribution or hosted classification-data API is planned.
 
-The maintainer is not pursuing additional dataset redistribution permissions or providing a hosted classification-data API. No permission-request workflow is planned. The MIT license covers the project's own code and documentation; it does not grant rights in third-party classifications.
-
-Tests run without official data. The current screenshots use invented, explicitly non-clinical records. Any separately held source workbooks and generated data remain private and ignored by Git. See the [full policy and source references](docs/DATA_SOURCES.md).
+The screenshots contain classification examples, not patient records. Their source content is credited separately from the project's MIT-licensed code. Tests run without official data. See [sources and data policy](docs/DATA_SOURCES.md).
 
 ## Academic context
 
@@ -34,17 +32,21 @@ The thesis title and classification terminology are retained in Italian. This RE
 
 ### ICD-10-IM
 
-Main component browser and entity details, shown with fictional demonstration records.
+Hierarchy browser and details for a selected ICD-10-IM code.
 
-![Main component browser displaying fictional non-clinical records](docs/images/icd10-im-browser.png)
+![ICD-10-IM hierarchy browser and selected code details](docs/images/icd10-im-browser.png)
+
+Classification content: Ministero della Salute and Regione Autonoma Friuli Venezia Giulia, ICD-10-IM gamma 2.1 (December 2025), [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). [Full attribution](docs/DATA_SOURCES.md#icd-10-im).
 
 ### CIPI
 
 The standalone CIPI browser uses the same interaction patterns for procedure codes.
 
-![Standalone CIPI browser displaying fictional non-clinical records](docs/images/cipi-browser.png)
+![CIPI hierarchy browser and selected procedure details](docs/images/cipi-browser.png)
 
-Both previews use synthetic `DEMO` records created for presentation. They contain neither official classification entries nor patient data, and their codes are not valid clinical codes.
+Classification content: Ministero della Salute, CIPI gamma 2.0 (December 2025), [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). [Full attribution](docs/DATA_SOURCES.md#cipi).
+
+Screenshots illustrate the local demo interfaces using selected classification entries. They contain no patient records. Classification content retains its source license and is not relicensed under MIT.
 
 ## Repository components
 
@@ -125,4 +127,4 @@ The suite uses synthetic fixtures and does not require classification datasets. 
 
 ICD-10-IM import preserves source clinical fields, retains chapter intervals as metadata and adds two explicitly marked, non-codable technical range containers for navigation. CIPI PHP and Node conversion outputs differ only in line-ending normalization for 19 source entities. See the [correction details](docs/FIXES.md).
 
-Source code, accompanying project documentation and the synthetic previews are licensed under the **[MIT License](LICENSE)**. Third-party classification materials and any thesis document are outside that license's scope. Source references and notices are retained in [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md). Dataset distribution and a hosted classification-data API are outside this repository's publication scope; no further permission process is planned.
+Source code and accompanying project documentation are licensed under the **[MIT License](LICENSE)**. Third-party classification content, including the entries visible in screenshots, and any thesis document are outside that license's scope. See [sources, attribution and data policy](docs/DATA_SOURCES.md). Official workbooks and generated datasets remain local and ignored by Git.
