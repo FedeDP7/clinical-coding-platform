@@ -272,6 +272,9 @@ $output = [
     'chapters'  => $chapters,
 ];
 
+require_once __DIR__ . '/../api/hierarchy.php';
+$output = normalizeIcd10imHierarchy($output);
+
 if (!is_dir(dirname($outputFile))) {
     mkdir(dirname($outputFile), 0755, true);
 }
@@ -283,5 +286,5 @@ file_put_contents(
 
 $size = round(filesize($outputFile) / 1024 / 1024, 1);
 echo "Fatto! --> $outputFile ({$size} MB)\n"; 
-echo "Entità totali:    $rowCount\n"; 
+echo "Entità totali:    " . $output['release']['totalEntities'] . "\n";
 echo "Codici terminali: " . $output['release']['totalCodable'] . "\n"; 

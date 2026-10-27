@@ -15,6 +15,6 @@ The standalone CIPI project and the combined project contain differing JavaScrip
 
 ## Validation results
 
-PHP and JavaScript syntax checks passed. Local API smoke tests passed for release, chapters, entity, search and resolve; unknown routes returned 404. Relative HTML asset and page links resolved. Interactive browser workflows were not exercised.
+PHP and JavaScript syntax checks passed. Local API smoke tests passed for release, chapters, entity, search and resolve; unknown routes returned 404. Relative HTML asset and page links resolved. Browser search/selection and the CIPI SDO popup were subsequently verified during the API/hierarchy corrections.
 
-Both PHP converters completed successfully. ICD-10-IM output matched the supplied JSON. CIPI conversion produced the same 15,958 entities but differed from the supplied JSON in text fields (`inclusions`, `exclusions`, `generalNotes`) for 19 entities. The supplied local JSON was preserved; review these differences before regenerating a release. The alternative Node converter was syntax-checked but not run.
+Both PHP converters completed successfully. ICD-10-IM output matched the supplied JSON. CIPI conversion produced the same 15,958 entities but differed from the supplied JSON in text fields (`inclusions`, `exclusions`, `generalNotes`) for 19 entities. The differences were subsequently confirmed to be CRLF/LF line endings only; the alternative Node converter exactly reproduces the supplied JSON. See [corrections](../../docs/FIXES.md) and run `php tests/regression.php` from the repository root.

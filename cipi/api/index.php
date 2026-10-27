@@ -26,6 +26,19 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     err(405, 'METHOD_NOT_ALLOWED', 'Solo GET');
 }
 
+// PHP parses bracket parameters (e.g. q[]=x) as arrays. Reject them
+// before routing or string operations, preserving the JSON error contract.
+foreach ($_GET as $name => $value) {
+    if (!is_string($value)) {
+        err(400, 'INVALID_PARAM', 'I parametri devono essere stringhe semplici');
+    }
+}
+foreach (['page', 'pageSize'] as $parameter) {
+    if (isset($_GET[$parameter]) && filter_var($_GET[$parameter], FILTER_VALIDATE_INT) === false) {
+        err(400, 'INVALID_PARAM', 'I parametri di paginazione devono essere interi rappresentabili');
+    }
+}
+
 // Carica dati dal file JSON
 $jsonFile = __DIR__ . '/data/cipi.json';
 if (!file_exists($jsonFile)) { // se il file non esiste da errore
@@ -205,13 +218,15 @@ function handleSearch(array $m): void
     $page         = max(1, (int)($_GET['page'] ?? 1)); // pagina corrente
     $pageSize     = min(100, max(1, (int)($_GET['pageSize'] ?? 20))); // max risultati per pagina (20)
 
+    $subtree = $chapter ? searchSubtree($chapter) : null;
+
     $qLow    = mb_strtolower($q); // Rende la query minuscola per una ricerca case-insensitive
     $matches = [];
     // ciclo per i match
     foreach ($ENTITIES as $e) {
         if ($terminalOnly && !$e['isTerminal']) continue;
         if ($classKind && $e['classKind'] !== $classKind) continue;
-        if ($chapter && $e['parent'] !== $chapter && $e['code'] !== $chapter) continue;
+        if ($subtree !== null && !isset($subtree[$e['code']])) continue;
 
         $score = 0; // inizializza punteggio
         $matchIn = null; // campo dove è avvenuto il match
@@ -257,7 +272,7 @@ function handleSearch(array $m): void
     usort($matches, fn($a, $b) => $b['_score'] <=> $a['_score']);
 
     $total  = count($matches); // totale risultati
-    $offset = ($page - 1) * $pageSize; // calcola l'offset
+    $offset = $page > intdiv(PHP_INT_MAX, $pageSize) ? PHP_INT_MAX : ($page - 1) * $pageSize; // calcola l'offset
     $page_results = array_slice($matches, $offset, $pageSize); // estrae risultati
     // Rimuove score dai risultati
     $page_results = array_map(function ($r) {
@@ -333,8 +348,34 @@ function handleCrosswalkIcd10(array $m): void
 }
 
 // Helpers
-// shortEntity
-// Estrae campi rilevanti di un'entità
+// Node plus every descendant; unknown roots yield an empty result set.
+function searchSubtree(string $code): array
+{
+    global $ENTITIES, $BY_CODE, $BY_PARENT;
+    if (!isset($BY_CODE[$code])) {
+        // Workbook chapter ranges are aliases, not extra clinical entities.
+        foreach ($ENTITIES as $entity) {
+            if ($entity['classKind'] === 'chapter' && ($entity['chapterRange'] ?? null) === $code) {
+                $code = $entity['code'];
+                break;
+            }
+        }
+    }
+    if (!isset($BY_CODE[$code])) return [];
+    $pending = [$code];
+    $seen = [];
+    while ($pending) {
+        $current = array_pop($pending);
+        if (isset($seen[$current])) continue;
+        $seen[$current] = true;
+        foreach ($BY_PARENT[$current] ?? [] as $i) {
+            $pending[] = $ENTITIES[$i]['code'];
+        }
+    }
+    return $seen;
+}
+
+// Estrae i campi rilevanti di un'entità.
 function shortEntity(array $e): array
 {
     return [

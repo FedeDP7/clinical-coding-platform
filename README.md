@@ -38,7 +38,15 @@ Open `http://localhost:8000/Web/cipi.html`. CIPI examples default to port 8000. 
 
 The prepared local copy contains the original workbooks and generated JSON files. These are ignored by Git and will not be included in a fresh clone. Obtain authorized workbooks and follow the instructions in [ICD-10-IM data setup](icd10-im/api/data/README.md) and [CIPI data setup](cipi/api/data/README.md).
 
-Run conversion commands from the relevant component directory. CIPI PHP conversion differs from the supplied JSON in textual fields of 19 entities; the supplied local JSON has been preserved. See the publication notes before regenerating a release.
+Run conversion commands from the relevant component directory. ICD-10-IM import normalizes chapter roots and adds two non-codable technical range containers while preserving source clinical records. CIPI PHP output differs from the supplied JSON only in CRLF/LF line endings for 19 entities. See [API and hierarchy corrections](docs/FIXES.md).
+
+## Regression checks
+
+```sh
+php tests/regression.php
+```
+
+The suite uses synthetic fixtures, needs no classification dataset, and covers parameter validation, pagination, subtree filters and hierarchy normalization.
 
 ## Publication and licensing
 
