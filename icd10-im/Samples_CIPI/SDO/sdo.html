@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo SDO — CIPI CODIT</title>
+
+  <!-- 1. CSS della libreria -->
+  <link rel="stylesheet" href="../../cipi-codit.css">
+</head>
+
+<body>
+
+  <h1>SDO — Scheda Dimissione Ospedaliera (Demo)</h1>
+  <p class="sdo-subtitle">
+    Click sul bottone <em>Cerca Codice</em> apre la modale; alla selezione, il
+    codice finisce nel campo associato e la modale si chiude automaticamente.
+  </p>
+
+  <div class="sdo-form">
+    <div class="sdo-row">
+      <label for="diag-principale">Diagnosi Principale</label>
+      <input type="text" id="diag-principale" readonly placeholder="(nessun codice)">
+      <button type="button" id="btn-diag-principale">Cerca Codice</button>
+      <button type="button" class="sdo-info" id="info-diag-principale" disabled>ℹ️ Dettagli</button>
+      <button type="button" class="sdo-clear" data-target="diag-principale"
+        data-detail="info-diag-principale">×</button>
+    </div>
+
+    <div class="sdo-row">
+      <label for="diag-sec-1">Diagnosi Secondaria 1</label>
+      <input type="text" id="diag-sec-1" readonly placeholder="(nessun codice)">
+      <button type="button" id="btn-diag-sec-1">Cerca Codice</button>
+      <button type="button" class="sdo-info" id="info-diag-sec-1" disabled>ℹ️ Dettagli</button>
+      <button type="button" class="sdo-clear" data-target="diag-sec-1" data-detail="info-diag-sec-1">×</button>
+    </div>
+
+    <div class="sdo-row">
+      <label for="diag-sec-2">Diagnosi Secondaria 2</label>
+      <input type="text" id="diag-sec-2" readonly placeholder="(nessun codice)">
+      <button type="button" id="btn-diag-sec-2">Cerca Codice</button>
+      <button type="button" class="sdo-info" id="info-diag-sec-2" disabled>ℹ️ Dettagli</button>
+      <button type="button" class="sdo-clear" data-target="diag-sec-2" data-detail="info-diag-sec-2">×</button>
+    </div>
+
+    <div class="sdo-row">
+      <label for="diag-sec-3">Diagnosi Secondaria 3</label>
+      <input type="text" id="diag-sec-3" readonly placeholder="(nessun codice)">
+      <button type="button" id="btn-diag-sec-3">Cerca Codice</button>
+      <button type="button" class="sdo-info" id="info-diag-sec-3" disabled>ℹ️ Dettagli</button>
+      <button type="button" class="sdo-clear" data-target="diag-sec-3" data-detail="info-diag-sec-3">×</button>
+    </div>
+
+    <div class="sdo-row">
+      <label for="diag-sec-4">Diagnosi Secondaria 4</label>
+      <input type="text" id="diag-sec-4" readonly placeholder="(nessun codice)">
+      <button type="button" id="btn-diag-sec-4">Cerca Codice</button>
+      <button type="button" class="sdo-info" id="info-diag-sec-4" disabled>ℹ️ Dettagli</button>
+      <button type="button" class="sdo-clear" data-target="diag-sec-4" data-detail="info-diag-sec-4">×</button>
+    </div>
+  </div>
+
+
+
+  <script src="../../cipi-codit.js"></script>
+  <script src="sdo.js"></script>
+
+</body>
+
+</html>

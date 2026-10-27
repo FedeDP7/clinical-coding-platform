@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CIPI SDO</title>
+  <link rel="stylesheet" href="style_sdo.css" />
+</head>
+
+<body>
+  <header class="top-banner">
+    <div class="banner-title">📋 CIPI SDO</div>
+    <div class="subtitle">
+      Scheda di Dimissione Ospedaliera —
+      <a href="cipi.html" class="browser-link">Browser CIPI</a>
+    </div>
+  </header>
+
+  <div class="main-container">
+    <!-- SINISTRA -->
+    <div class="left">
+      <div class="diagnosi-header">
+        <h2 class="section-title">Procedure (CIPI)</h2>
+        <div class="topbar-actions">
+          <button id="helpBtn" class="btn" type="button">Help</button>
+          <button id="resetBtn" class="btn" type="button">Reset SDO</button>
+          <button id="generaSdoBtn" class="btn primary" type="button">Genera SDO</button>
+        </div>
+      </div>
+
+      <!-- PROCEDURA PRINCIPALE -->
+      <div class="search" id="diagnosi1-container">
+        <div class="search-header">
+          <label for="search_diagnosi1">Procedura Principale</label>
+        </div>
+        <input id="search_diagnosi1" type="text" class="ict-input" autocomplete="off" data-ict-ino="diagnosi1"
+          placeholder="Cerca per codice o testo: (00.00.0A, approccio artroscopico…)" />
+        <div class="ict-window" data-ict-ino="diagnosi1"></div>
+      </div>
+
+      <div class="btn-container">
+        <button id="addDiagnosi2Btn" class="btn" type="button">
+          + Aggiungi procedura secondaria
+        </button>
+        <span id="max-info" class="max-info" hidden>Massimo di procedure secondarie raggiunto</span>
+      </div>
+    </div>
+
+    <!-- DESTRA -->
+    <div class="right">
+      <h2 class="section-title">Dettagli Codice</h2>
+
+      <div id="details-empty" class="details-empty">
+        Seleziona una procedura per visualizzarne i dettagli.
+      </div>
+
+      <div id="details-box" class="details-box" style="display: none">
+        <div class="detail-item">
+          <strong id="detail-code" class="code"></strong>
+        </div>
+
+        <div id="detail-title" class="title"></div>
+
+        <div class="divider"></div>
+
+        <div class="detail-item">
+          <span class="label">Tipo:</span>
+          <span id="detail-classKind" class="value">—</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Terminale:</span>
+          <span id="detail-terminal" class="value">—</span>
+        </div>
+        <div class="detail-item" id="detail-icd9-box" style="display:none">
+          <span class="label">ICD-9-CM:</span>
+          <span id="detail-icd9" class="value">—</span>
+        </div>
+        <div class="detail-item" id="detail-ahrq-box" style="display:none">
+          <span class="label">AHRQ:</span>
+          <span id="detail-ahrq" class="value">—</span>
+        </div>
+
+        <div id="detail-parent-box" class="detail-block" style="display: none">
+          <div class="label">Padre</div>
+          <a id="detail-parent" class="value parent-clickable" href="#"></a>
+        </div>
+
+        <div id="detail-siblings-box" class="detail-block" style="display: none">
+          <div class="label">Stessa categoria</div>
+          <div id="detail-siblings" class="siblings-list"></div>
+        </div>
+      </div>
+
+      <!-- MODALE SOSTITUZIONE CODICE -->
+      <div id="substitute-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+          <span id="close-substitute-modal" class="close">&times;</span>
+          <h3>Seleziona codice sostitutivo</h3>
+          <div id="substitute-parent-info" class="detail-block"></div>
+          <div id="substitute-list" class="substitute-list"></div>
+        </div>
+      </div>
+
+      <!-- MODALE HELP -->
+      <div id="help-modal" class="modal" style="display:none;">
+        <div class="modal-content help-content">
+          <span id="close-help-modal" class="close">&times;</span>
+          <h3>Help: SDO CIPI</h3>
+          <p>
+            Il sistema <strong>CIPI</strong> (Classificazione Italiana delle Procedure di Intervento)
+            classifica le procedure ed interventi per ricovero ospedaliero. Ogni codice ha
+            una struttura gerarchica: Capitolo (2 cifre) --> Rubrica (3 cifre) --> Sottorubrica
+            (4 cifre) --> Codificante terminale.
+          </p>
+          <p>
+            Inserisci una <strong>procedura principale</strong> e una o più
+            <strong>procedure secondarie</strong>. La SDO finale mostrerà i codici CIPI
+            con la corrispondente trans-codifica ICD-9-CM (se disponibile).
+          </p>
+          <p>
+            Nella SDO sono ammessi solo codici <strong>terminali</strong> (Codificanti):
+            Capitoli e Rubriche non possono essere selezionati come voce della scheda.
+          </p>
+        </div>
+      </div>
+
+      <!-- BOX RIEPILOGO SDO -->
+      <div id="sdo-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+          <span id="close-modal" class="close">&times;</span>
+
+          <h3>Riepilogo SDO</h3>
+
+          <div class="modal-columns">
+            <div>
+              <h4>Procedure (CIPI)</h4>
+              <div id="modal-diagnosi"></div>
+            </div>
+
+            <div>
+              <h4>Transcodifica ICD-9-CM</h4>
+              <div id="modal-icd9"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../cipi-codit.js"></script>
+
+  <script>
+    const config = {
+      apiBaseUrl: "http://localhost:8000/api/index.php",
+      releaseId: "20251215",
+      terminalOnly: true,
+      debounceMs: 150,
+    };
+
+    const sdoState = {
+      diagnosi1: null,
+      diagnosiSecondarie: [],
+    };
+
+    let diagnosiSecondarieCount = 0;
+    const MAX_SECONDARIE = 10;
+
+    // ---- HELPERS ----
+
+    function esc(s) {
+      if (s == null) return "";
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function parseInoIndex(ino) {
+      const n = parseInt(String(ino).replace("diagnosi", ""), 10);
+      return isNaN(n) ? -1 : n - 1;
+    }
+
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = "none";
+    }
+
+    function isCodeUsedElsewhere(code, currentIno) {
+      if (!code) return false;
+      if (currentIno !== "diagnosi1" && sdoState.diagnosi1?.code === code) return true;
+      for (let i = 0; i < sdoState.diagnosiSecondarie.length; i++) {
+        const d = sdoState.diagnosiSecondarie[i];
+        if (!d) continue;
+        if (`diagnosi${i + 1}` === currentIno) continue;
+        if (d.code === code) return true;
+      }
+      return false;
+    }
+
+    function getActiveSecondaryCount() {
+      return document.querySelectorAll('.search[id$="-container"]:not(#diagnosi1-container)').length;
+    }
+
+    function updateMaxSecondaryUI() {
+      const btn = document.getElementById("addDiagnosi2Btn");
+      const info = document.getElementById("max-info");
+      if (!btn) return;
+      const atMax = getActiveSecondaryCount() >= MAX_SECONDARIE;
+      btn.disabled = atMax;
+      btn.classList.toggle("btn-disabled", atMax);
+      if (info) info.hidden = !atMax;
+    }
+
+    // ---- FETCH FIGLI ----
+
+    async function fetchChildren(parentCode) {
+      if (!parentCode) return [];
+      try {
+        let base = config.apiBaseUrl;
+        if (!/^https?:\/\//i.test(base)) base = new URL(base, window.location.origin).toString();
+        const url = new URL("", base);
+        url.searchParams.set("route", `/release/${config.releaseId}/entity/${encodeURIComponent(parentCode)}/children`);
+        const resp = await fetch(url.toString(), { headers: { Accept: "application/json" } });
+        if (!resp.ok) return [];
+        const json = await resp.json();
+        return Array.isArray(json.children) ? json.children : [];
+      } catch {
+        return [];
+      }
+    }
+
+    // ---- DETTAGLI CODICE ----
+
+    function updateDetails(data) {
+      const box = document.getElementById("details-box");
+      const empty = document.getElementById("details-empty");
+      if (!box) return;
+      if (!data) {
+        box.style.display = "none";
+        if (empty) empty.style.display = "block";
+        return;
+      }
+      box.style.display = "block";
+      if (empty) empty.style.display = "none";
+
+      document.getElementById("detail-code").textContent = data.code || "";
+      document.getElementById("detail-title").textContent = data.title || "";
+      document.getElementById("detail-classKind").textContent = data.classKind || "—";
+      document.getElementById("detail-terminal").textContent = data.isTerminal ? "sì" : "no";
+
+      const icd9Box = document.getElementById("detail-icd9-box");
+      if (data.icd9cmCode) {
+        icd9Box.style.display = "";
+        document.getElementById("detail-icd9").textContent = data.icd9cmCode;
+      } else {
+        icd9Box.style.display = "none";
+      }
+
+      const ahrqBox = document.getElementById("detail-ahrq-box");
+      if (data.ahrqClass) {
+        ahrqBox.style.display = "";
+        document.getElementById("detail-ahrq").textContent = data.ahrqClass;
+      } else {
+        ahrqBox.style.display = "none";
+      }
+
+      const parentBox = document.getElementById("detail-parent-box");
+      if (data.parent) {
+        parentBox.style.display = "block";
+        const parentEl = document.getElementById("detail-parent");
+        parentEl.textContent = data.parent;
+        parentEl.onclick = (ev) => {
+          ev.preventDefault();
+          openSubstituteModal(data);
+        };
+      } else {
+        parentBox.style.display = "none";
+      }
+
+      // FRATELLI
+      const sibBox = document.getElementById("detail-siblings-box");
+      const sibContainer = document.getElementById("detail-siblings");
+      sibBox.style.display = "none";
+      sibContainer.innerHTML = "";
+      if (data.parent) {
+        fetchChildren(data.parent).then(children => {
+          if (!children || children.length <= 1) return;
+          sibBox.style.display = "block";
+          children.forEach(child => {
+            if (!child.code) return;
+            const isCurrent = child.code === data.code;
+            const chip = document.createElement("span");
+            chip.className = "sibling-chip" + (isCurrent ? " current" : "");
+            if (isCurrent) {
+              chip.textContent = child.code;
+              if (child.title) chip.title = child.title;
+            } else {
+              const a = document.createElement("a");
+              a.href = "#";
+              a.textContent = child.code;
+              a.title = child.title || "";
+              a.addEventListener("click", ev => {
+                ev.preventDefault();
+                const targetIno = ICT.Handler.currentCampo ?? "diagnosi1";
+                ICT.Handler.selectDirect(targetIno, child);
+              });
+              chip.appendChild(a);
+              if (child.title) {
+                chip.appendChild(document.createTextNode(" " + child.title));
+              }
+            }
+            sibContainer.appendChild(chip);
+          });
+        });
+      }
+    }
+
+    // ---- MODALE SOSTITUZIONE ----
+
+    async function openSubstituteModal(data) {
+      if (!data?.parent) return;
+      const modal = document.getElementById("substitute-modal");
+      const info = document.getElementById("substitute-parent-info");
+      const list = document.getElementById("substitute-list");
+      if (!modal || !info || !list) return;
+      info.innerHTML = `<span class="label">Padre:</span> <strong>${esc(data.parent)}</strong>`;
+      list.innerHTML = "<em>Caricamento…</em>";
+      modal.style.display = "flex";
+      const children = await fetchChildren(data.parent);
+      list.innerHTML = "";
+      if (!children || children.length === 0) {
+        list.innerHTML = "<em>Nessun codice compatibile.</em>";
+        return;
+      }
+      const compatible = children.filter(c =>
+        c.code && c.code !== data.code &&
+        (!data.classKind || !c.classKind || c.classKind === data.classKind)
+      );
+      if (compatible.length === 0) {
+        list.innerHTML = "<em>Nessun codice sostitutivo compatibile.</em>";
+        return;
+      }
+      compatible.forEach(child => {
+        const row = document.createElement("div");
+        row.className = "substitute-row";
+        const code = document.createElement("strong");
+        code.textContent = child.code;
+        code.className = "code";
+        const title = document.createElement("span");
+        title.className = "substitute-title";
+        title.textContent = child.title ? " — " + child.title : "";
+        row.appendChild(code);
+        row.appendChild(title);
+        row.addEventListener("click", () => {
+          const campo = ICT.Handler.currentCampo ?? "diagnosi1";
+          ICT.Handler.search(campo, child.code);
+          modal.style.display = "none";
+        });
+        list.appendChild(row);
+      });
+    }
+
+    // ---- GENERA SDO ----
+
+    function generaSDO() {
+      const mainInput = document.getElementById("search_diagnosi1");
+      if (mainInput && mainInput.value.trim() && !sdoState.diagnosi1) {
+        alert("Completa la selezione della procedura principale prima di generare la SDO.");
+        return;
+      }
+      for (let i = 1; i <= diagnosiSecondarieCount; i++) {
+        const id = i + 1;
+        const inp = document.getElementById(`search_diagnosi${id}`);
+        if (inp && inp.value.trim() && !sdoState.diagnosiSecondarie[id - 1]) {
+          alert(`Completa la selezione della procedura secondaria ${i} prima di generare la SDO.`);
+          return;
+        }
+      }
+
+      const diagnosi = [];
+      if (sdoState.diagnosi1) diagnosi.push(sdoState.diagnosi1);
+      sdoState.diagnosiSecondarie.forEach(d => { if (d) diagnosi.push(d); });
+
+      if (diagnosi.length === 0) {
+        alert("Inserisci almeno una procedura");
+        return;
+      }
+
+      document.getElementById("modal-diagnosi").innerHTML = diagnosi
+        .map(d => `<div><strong>${esc(d.code)}</strong> — ${esc(d.title)}</div>`)
+        .join("");
+      document.getElementById("modal-icd9").innerHTML = diagnosi
+        .map(d => d.icd9cmCode ? `<div>${esc(d.icd9cmCode)}</div>` : `<div>—</div>`)
+        .join("");
+      document.getElementById("sdo-modal").style.display = "flex";
+    }
+
+    // ---- RIORDINO SECONDARIE ----
+
+    function swapSecondaryData(idA, idB) {
+      const temp = sdoState.diagnosiSecondarie[idA - 1];
+      sdoState.diagnosiSecondarie[idA - 1] = sdoState.diagnosiSecondarie[idB - 1];
+      sdoState.diagnosiSecondarie[idB - 1] = temp;
+
+      [idA, idB].forEach(id => {
+        const data = sdoState.diagnosiSecondarie[id - 1];
+        const input = document.getElementById(`search_diagnosi${id}`);
+        if (!input) return;
+        if (data) {
+          input.value = [data.code, data.title].filter(Boolean).join(" ");
+        } else {
+          input.value = "";
+          input.removeAttribute("data-selected-code");
+        }
+      });
+    }
+
+    function getSecondaryIds() {
+      return [...document.querySelectorAll('.search[id$="-container"]:not(#diagnosi1-container)')]
+        .map(c => parseInt(c.id.replace("diagnosi", "").replace("-container", ""), 10))
+        .filter(n => !isNaN(n));
+    }
+
+    function moveSecondaryUp(id) {
+      const ids = getSecondaryIds();
+      const idx = ids.indexOf(id);
+      if (idx <= 0) return;
+      swapSecondaryData(id, ids[idx - 1]);
+    }
+
+    function moveSecondaryDown(id) {
+      const ids = getSecondaryIds();
+      const idx = ids.indexOf(id);
+      if (idx < 0 || idx >= ids.length - 1) return;
+      swapSecondaryData(id, ids[idx + 1]);
+    }
+
+    // ---- AGGIUNGI PROCEDURA SECONDARIA ----
+
+    function addDiagnosi2() {
+      if (getActiveSecondaryCount() >= MAX_SECONDARIE) {
+        updateMaxSecondaryUI();
+        return null;
+      }
+
+      diagnosiSecondarieCount++;
+      const id = diagnosiSecondarieCount + 1;
+
+      const container = document.createElement("div");
+      container.className = "search";
+      container.id = `diagnosi${id}-container`;
+
+      container.innerHTML = `
+          <div class="search-header">
+            <label>Procedura Secondaria ${diagnosiSecondarieCount}</label>
+            <div class="row-actions">
+              <div class="move-controls">
+                <button type="button" class="btn-move" data-dir="up" title="Sposta su">▲</button>
+                <button type="button" class="btn-move" data-dir="down" title="Sposta giù">▼</button>
+              </div>
+              <button type="button" class="btn-remove" title="Rimuovi">&times;</button>
+            </div>
+          </div>
+          <input
+            id="search_diagnosi${id}"
+            type="text"
+            class="ict-input"
+            data-ict-ino="diagnosi${id}"
+            placeholder="Cerca per codice o testo…"
+            autocomplete="off"
+          />
+        `;
+
+      document.querySelector(".left").insertBefore(
+        container,
+        document.getElementById("addDiagnosi2Btn").parentElement
+      );
+
+      ICT.Handler.scanNew();
+
+      container.querySelector(".btn-remove").addEventListener("click", () => {
+        sdoState.diagnosiSecondarie[id - 1] = null;
+        ICT.Handler.deregister(`diagnosi${id}`);
+        container.remove();
+        updateMaxSecondaryUI();
+      });
+
+      container.querySelectorAll(".btn-move").forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (btn.dataset.dir === "up") moveSecondaryUp(id);
+          else moveSecondaryDown(id);
+        });
+      });
+
+      document.getElementById(`search_diagnosi${id}`)
+        ?.addEventListener("focus", () => {
+          ICT.Handler.currentCampo = `diagnosi${id}`;
+        });
+
+      updateMaxSecondaryUI();
+      return id;
+    }
+
+    document.getElementById("addDiagnosi2Btn")
+      .addEventListener("click", () => { addDiagnosi2(); });
+
+    // ---- ICT CONFIG ----
+
+    ICT.Handler.configure(
+      {
+        ...config,
+        isDisabled: (code, ino) => isCodeUsedElsewhere(code, ino),
+      },
+      {
+        onSelect: function (data) {
+          if (!data?.code) return;
+          const current = ICT.Handler.currentCampo ?? "diagnosi1";
+
+          // Blocca duplicati
+          if (isCodeUsedElsewhere(data.code, current)) {
+            alert(`Il codice ${data.code} è già presente nella SDO.`);
+            ICT.Handler.clear(current);
+            return;
+          }
+
+          // Blocca entità non terminali (chapter/block/sottocategoria)
+          if (!data.isTerminal) {
+            alert("Nella SDO è ammesso solo un codice terminale (Codificante). Capitoli e Rubriche non sono selezionabili.");
+            ICT.Handler.clear(current);
+            return;
+          }
+
+          // Salva
+          if (current === "diagnosi1") {
+            sdoState.diagnosi1 = data;
+          } else {
+            const index = parseInoIndex(current);
+            if (index >= 0) sdoState.diagnosiSecondarie[index] = data;
+          }
+          updateDetails(data);
+        },
+
+        onClear: function (ino) {
+          if (ino === "diagnosi1") {
+            sdoState.diagnosi1 = null;
+          } else {
+            const index = parseInoIndex(ino);
+            if (index >= 0) sdoState.diagnosiSecondarie[index] = null;
+          }
+          updateDetails(null);
+        },
+      },
+    );
+
+    document.getElementById("search_diagnosi1")
+      .addEventListener("focus", () => {
+        ICT.Handler.currentCampo = "diagnosi1";
+      });
+
+    ICT.Handler.currentCampo = "diagnosi1";
+
+    // ---- RESET ----
+
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      ICT.Handler.clear("diagnosi1");
+      document.getElementById("search_diagnosi1").value = "";
+      for (let i = 1; i <= diagnosiSecondarieCount; i++) {
+        const ino = `diagnosi${i + 1}`;
+        ICT.Handler.clear(ino);
+        document.getElementById(`${ino}-container`)?.remove();
+      }
+      sdoState.diagnosi1 = null;
+      sdoState.diagnosiSecondarie = [];
+      diagnosiSecondarieCount = 0;
+      ICT.Handler.currentCampo = "diagnosi1";
+      updateMaxSecondaryUI();
+      updateDetails(null);
+    });
+
+    // ---- CLOSE HANDLERS ----
+
+    [
+      "close-modal:sdo-modal",
+      "close-substitute-modal:substitute-modal",
+      "close-help-modal:help-modal",
+    ].forEach(pair => {
+      const [btnId, modalId] = pair.split(":");
+      const btn = document.getElementById(btnId);
+      if (btn) btn.onclick = () => closeModal(modalId);
+    });
+
+    document.getElementById("helpBtn")?.addEventListener("click", () => {
+      document.getElementById("help-modal").style.display = "flex";
+    });
+
+    document.getElementById("generaSdoBtn")?.addEventListener("click", () => {
+      generaSDO();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      const openModals = [...document.querySelectorAll(".modal")]
+        .filter(m => m.style.display && m.style.display !== "none");
+      if (openModals.length > 0) {
+        openModals[openModals.length - 1].style.display = "none";
+      }
+    });
+
+    window.onclick = (e) => {
+      if (e.target.classList.contains("modal")) {
+        e.target.style.display = "none";
+      }
+    };
+  </script>
+</body>
+
+</html>

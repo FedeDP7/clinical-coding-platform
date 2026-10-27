@@ -1,0 +1,34 @@
+﻿<!doctype html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Callback CODIT</title>
+  <link rel="stylesheet" href="../../icd10im-codit.css">
+</head>
+
+<body style="font-family: system-ui, -apple-system, sans-serif; padding: 16px;">
+
+  <div style="margin-bottom: 20px;">
+    <strong>Ricerca Codice (con callback)</strong>
+  </div>
+
+  <div style="margin-bottom: 12px;">
+    Scrivi per effettuare la ricerca:
+    <input type="text" data-ict-ino="1" autocomplete="off">
+  </div>
+
+  <div style="margin-bottom: 12px;">
+    Codice selezionato:
+    <input type="text" id="paste-selectedEntity" readonly
+      style="width: 220px; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace; background: #f8fafc;">
+  </div>
+
+  <script src="../../icd10im-codit.js"></script>
+  <script src="callback.js"></script>
+
+</body>
+
+</html>
+

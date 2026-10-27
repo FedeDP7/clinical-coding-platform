@@ -1,0 +1,44 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0 auto;
+}
+
+.sdo-link,
+.sdo-link:link,
+.sdo-link:visited,
+.sdo-link:hover,
+.sdo-link:active {
+  color: white;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.card {
+  border: none;
+  padding: 20px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.06);
+}
+
+.demo-wrap {
+  position: relative;
+  margin-bottom: 20px;
+  max-width: 600px;
+}
+
+/* Banner in alto */
+.top-banner {
+  background: blue;
+  color: white;
+  padding: 18px 24px;
+}
+
+.banner-title {
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+.banner-subtitle {
+  font-size: 0.85em;
+  opacity: 0.85;
+  margin-top: 4px;
+}

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo MultiInstance CODIT</title>
+  <link rel="stylesheet" href="../../icd10im-codit.css">
+  <style>
+    body {
+      font-family: "Ubuntu", Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      margin: 10px 20px 20px 20px;
+      padding: 0;
+      font-size: 0.9rem;
+      line-height: 1rem;
+      color: #333;
+      background-color: #fff;
+    }
+
+    .demo-instance {
+      border: 1px solid #ccc;
+      margin-bottom: 40px;
+      padding: 10px;
+      background-color: #eee;
+      border-radius: 0.25rem;
+    }
+
+    .demo {
+      margin-top: 20px;
+    }
+
+    .demo::after {
+      clear: both;
+      content: "";
+      display: block;
+    }
+
+    .demo-search {
+      float: left;
+      margin-bottom: 20px;
+    }
+
+    .demo input.ict-input {
+      width: 400px;
+    }
+
+    .demo-clear {
+      cursor: pointer;
+      padding: 2px;
+    }
+
+    .demo-subtitle {
+      font-size: 0.75rem;
+      font-weight: normal;
+      margin-left: 6px;
+    }
+
+    .demo-selected {
+      float: right;
+      display: none;
+    }
+
+    .demo-paste-selected {
+      background-color: #ff9;
+      padding: 5px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ECT 1 -->
+  <div class="demo-instance">
+    <div class="demo">
+      <h3>Embedded Coding Tool #1
+        <span class="demo-subtitle">Istanza configurata per ricerca su <b>ICD-10-IM</b> (full dataset).</span>
+      </h3>
+      <div class="demo-search">
+        Scrivi per effettuare la ricerca:
+        <input type="text" class="ict-input" autocomplete="off" data-ict-ino="1">
+        <button class="demo-clear" onclick="CODIT.Handler.clear('1');" title="Pulisci ricerca e risultati">❌</button>
+      </div>
+      <div id="demo-selected-1" class="demo-selected">
+        Selezione: <span id="demo-paste-selected-1" class="demo-paste-selected"></span>
+      </div>
+    </div>
+    <div class="ict-window" data-ict-ino="1"></div>
+  </div>
+
+  <!-- ECT 2 -->
+  <div class="demo-instance">
+    <div class="demo">
+      <h3>Embedded Coding Tool #2
+        <span class="demo-subtitle">Istanza parallela &mdash; stesso dataset, target DOM separato.</span>
+      </h3>
+      <div class="demo-search">
+        Scrivi per effettuare la ricerca:
+        <input type="text" class="ict-input" autocomplete="off" data-ict-ino="2">
+        <button class="demo-clear" onclick="CODIT.Handler.clear('2');" title="Pulisci ricerca e risultati">❌</button>
+      </div>
+      <div id="demo-selected-2" class="demo-selected">
+        Selezione: <span id="demo-paste-selected-2" class="demo-paste-selected"></span>
+      </div>
+    </div>
+    <div class="ict-window" data-ict-ino="2"></div>
+  </div>
+
+  <!-- ECT 3 -->
+  <div class="demo-instance">
+    <div class="demo">
+      <h3>Embedded Coding Tool #3
+        <span class="demo-subtitle">Terza istanza &mdash; dispatch via <code>selectedEntity.iNo</code>.</span>
+      </h3>
+      <div class="demo-search">
+        Scrivi per effettuare la ricerca:
+        <input type="text" class="ict-input" autocomplete="off" data-ict-ino="3">
+        <button class="demo-clear" onclick="CODIT.Handler.clear('3');" title="Pulisci ricerca e risultati">❌</button>
+      </div>
+      <div id="demo-selected-3" class="demo-selected">
+        Selezione: <span id="demo-paste-selected-3" class="demo-paste-selected"></span>
+      </div>
+    </div>
+    <div class="ict-window" data-ict-ino="3"></div>
+  </div>
+
+  <script src="../../icd10im-codit.js"></script>
+  <script src="MultiInstance.js"></script>
+
+</body>
+
+</html>

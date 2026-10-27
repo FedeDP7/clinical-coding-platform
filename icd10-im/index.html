@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ICD-10-IM CODIT — Samples</title>
+  <style>
+    :root {
+      --bg: #f5f6f8;
+      --card: #ffffff;
+      --border: #dfe3e8;
+      --text: #2b3440;
+      --muted: #6b7480;
+      --accent: #2563eb;
+      --accent-dark: #1d4ed8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .wrap {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 48px 20px 64px;
+    }
+
+    header h1 {
+      margin: 0 0 6px;
+      font-size: 1.9rem;
+    }
+
+    header p {
+      margin: 0 0 36px;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color .12s ease, box-shadow .12s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+      border-color: var(--accent);
+    }
+
+    .card h2 {
+      margin: 0 0 6px;
+      font-size: 1.1rem;
+    }
+
+    .card p {
+      margin: 0 0 16px;
+      font-size: .9rem;
+      color: var(--muted);
+      flex: 1;
+    }
+
+    .card .go {
+      align-self: flex-start;
+      background: transparent;
+      color: var(--accent);
+      font-size: .85rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border: 1px solid #bfd3f6;
+      border-radius: 4px;
+    }
+
+    .card:hover .go {
+      background: #eff4fe;
+      border-color: var(--accent);
+      color: var(--accent-dark);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <h1>ICD-10-IM CODIT — Samples</h1>
+      <p>Esempi di integrazione della libreria <code>icd10im-codit.js</code></p>
+    </header>
+
+    <main class="grid">
+      <a class="card" href="Samples/Browser/browser.html">
+        <h2>Browser</h2>
+        <p>Input + albero gerarchico</p>
+        <span class="go">Apri →</span>
+      </a>
+
+      <a class="card" href="Samples/Callback/callback.html">
+        <h2>Callback</h2>
+        <p>Pattern WHO CODIT v1.8: target esterno, <code>selectedEntityFunction</code>, risultati inline.</p>
+        <span class="go">Apri →</span>
+      </a>
+
+      <a class="card" href="Samples/CodingTool/CodingTool.html">
+        <h2>Coding Tool</h2>
+        <p>Demo zero-config con ricerca inline. Comportamento di default della libreria.</p>
+        <span class="go">Apri →</span>
+      </a>
+
+      <a class="card" href="Samples/MultiInstance/MultiInstance.html">
+        <h2>Multi Instance</h2>
+        <p>Tre input/window indipendenti con configurazione globale condivisa.</p>
+        <span class="go">Apri →</span>
+      </a>
+
+      <a class="card" href="Samples/Popup/popup.html">
+        <h2>Popup</h2>
+        <p>Window popup, resta aperta dopo la selezione</p>
+        <span class="go">Apri →</span>
+      </a>
+
+      <a class="card" href="Samples/SDO/sdo.html">
+        <h2>SDO</h2>
+        <p>Scheda di Dimissione Ospedaliera: multi-field via <code>CODIT.attach</code>, Popup modale.</p>
+        <span class="go">Apri →</span>
+      </a>
+    </main>
+
+  </div>
+</body>
+
+</html>

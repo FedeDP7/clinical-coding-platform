@@ -1,0 +1,61 @@
+# Local secrets and credentials
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+credentials*.json
+secrets*.json
+.npmrc
+.netrc
+.htpasswd
+auth.json
+
+# Local assistant/editor settings and history
+.claude/
+.codex/
+.idea/
+.vscode/
+.history/
+*.code-workspace
+
+# Dependencies and generated files
+node_modules/
+vendor/
+coverage/
+.cache/
+*.log
+*.tmp
+*.bak
+*.orig
+*.swp
+*~
+
+# Local datasets: retain locally, do not publish automatically
+**/api/data/*
+!**/api/data/README.md
+*.xlsx
+*.xls
+*.csv
+*.tsv
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+*.zip
+*.7z
+*.tar
+*.gz
+
+# Internal working notes
+**/ADD.txt
+**/README.txt
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini

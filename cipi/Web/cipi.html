@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CIPI Embedded Coding Tool</title>
+    <link rel="stylesheet" href="../cipi-codit.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="top-banner">
+      <div class="banner-title">CIPI Coding Tool — Browser</div>
+      <div class="banner-subtitle">
+        CIPI versione 2.0 - 15 Dicembre 2025 -
+        <a href="sdo.html" class="sdo-link">SDO</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="demo-wrap">
+        <input
+          type="text"
+          class="ict-input"
+          autocomplete="off"
+          data-ict-ino="1"
+          placeholder="Cerca per codice o testo: (00.00, approccio artroscopico…)"
+        />
+      </div>
+    </div>
+
+    <script src="../cipi-codit.js"></script>
+    <script>
+      // README plug-and-play: init minimale
+      const mySettings = {
+        apiBaseUrl: "http://localhost:8000/api/index.php",
+        releaseId: "20251215",
+        popupMode: true
+      };
+      CODIT.Handler.configure(mySettings);
+    </script>
+  </body>
+</html>
