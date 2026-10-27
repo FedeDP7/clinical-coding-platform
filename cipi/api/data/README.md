@@ -6,6 +6,6 @@ Required files:
 
 - `CIPI.xlsx` -> `cipi.json` via `php scripts/convert_cipi.php`.
 
-Run the commands from the repository root. Explicit input/output arguments are documented in the main README. Obtain authorized workbooks from the data owner; no download URL or redistribution permission has been verified in this preparation.
+Run the commands from the repository root. Explicit input/output arguments are documented in the main README. Obtain source workbooks from the [official NSIS-CLASS technical documentation](https://www.salute.gov.it/new/it/tema/assistenza-ospedaliera-sdo/documentazione-tecnica/). The supplied workbooks explicitly specify CC BY-NC-ND 4.0; permission to distribute the normalized datasets has not been established. See [sources, full attribution and reuse conditions](../../../docs/DATA_SOURCES.md).
 
 Do not assume that a software license applies to classification data. Original workbooks contain author and local-path metadata. Do not force-add them to Git. Review attribution, redistribution and conversion terms before publishing any dataset.

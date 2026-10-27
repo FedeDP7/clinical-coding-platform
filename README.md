@@ -30,11 +30,15 @@ Hierarchy browser and details for a selected ICD-10-IM code.
 
 ![ICD-10-IM browser showing the hierarchy and selected code details](docs/images/icd10-im-browser.png)
 
+Classification content: Ministero della Salute and Regione Autonoma Friuli Venezia Giulia, ICD-10-IM gamma 2.1 (December 2025), [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). [Full attribution and source](docs/DATA_SOURCES.md#icd-10-im).
+
 ### CIPI
 
 The standalone CIPI browser uses the same interaction patterns for procedure codes.
 
 ![CIPI browser showing the hierarchy and selected procedure details](docs/images/cipi-browser.png)
+
+Classification content: Ministero della Salute, CIPI gamma 2.0 (December 2025), [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). [Full attribution and source](docs/DATA_SOURCES.md#cipi).
 
 Screenshots show the local demo interfaces using classification data; no patient records are used.
 
@@ -117,4 +121,4 @@ The suite uses synthetic fixtures and does not require classification datasets. 
 
 ICD-10-IM import preserves source clinical fields, retains chapter intervals as metadata and adds two explicitly marked, non-codable technical range containers for navigation. CIPI PHP and Node conversion outputs differ only in line-ending normalization for 19 source entities. See the [correction details](docs/FIXES.md).
 
-Source code and accompanying software documentation are licensed under the **[MIT License](LICENSE)**. Classification datasets and any thesis document are outside that license's scope. Dataset redistribution and attribution follow their respective terms; local workbooks and generated JSON remain ignored by Git.
+Source code and accompanying software documentation are licensed under the **[MIT License](LICENSE)**. Classification datasets, classification content visible in screenshots and any thesis document are outside that license's scope. The supplied workbooks specify **CC BY-NC-ND 4.0**. See [sources, attribution and reuse conditions](docs/DATA_SOURCES.md), including the limits on sharing normalized datasets. Local workbooks and generated JSON remain ignored by Git.
